@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { useNavigate } from "react-router-dom";
 import Load from "./Loader";
 import dragImg from '../assets/drag_animation.svg'
+import Nurse from "./Voxel_nurse";
 
 
 // Starfield Component
@@ -14,7 +15,7 @@ export const StarField = () => {
   const pointsRef = useRef();
 
   const stars = React.useMemo(() => {
-    const starPositions = new Float32Array(3000 * 4);
+    const starPositions = new Float32Array(3000 * 2);
     for (let i = 0; i < starPositions.length; i++) {
       starPositions[i] = (Math.random() - 0.5) * 10;
     }
@@ -29,7 +30,7 @@ export const StarField = () => {
 
   return (
     <Points ref={pointsRef} positions={stars} stride={3}>
-      <PointMaterial size={0.018} sizeAttenuation depthWrite={false} color="black" />
+      <PointMaterial size={0.018} sizeAttenuation depthWrite={false} color="white" />
     </Points>
   );
 };
@@ -46,7 +47,7 @@ const Scene = ({ orbitControlsRef }) => {
   };
 
   const scaleModel = () => {
-    let s1 = 0.07; let s2 = 0.07; let s3 = 0.07;
+    let s1 = 0.5; let s2 = 0.5; let s3 = 0.5;
     if (isMobile) {
       s1 = 0.05, s2 = 0.05, s3 = 0.05;
     }
@@ -125,7 +126,8 @@ const Scene = ({ orbitControlsRef }) => {
   return (
     <>
       {/* Book Model */}
-      <Book position={[0, -0.4, 0]} scale={[s1, s2, s3]} />
+      {/* <Book position={[0, -0.4, 0]} scale={[s1, s2, s3]} /> */}
+      <Nurse  position={[-3.5, -3.3, 0]} scale={[s1, s2, s3]} rotation={[-0.3, 0, 0]}/>
 
       {/* Airplane Model, rotates around the book */}
       <CartoonAirPlane ref={airplaneRef} position={[-4, 3.7, 1]} scale={[0.02, 0.02, 0.02]} rotation={[0, 3, 0]} />
