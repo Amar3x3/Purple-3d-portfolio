@@ -11,11 +11,11 @@ import React from 'react'
 import { useGraph } from '@react-three/fiber'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { SkeletonUtils } from 'three-stdlib'
-import src from '../assets/models/destiny2.glb'
+// import src from '../assets/models/destiny2.glb'
 
 const Destiny =(props)=> {
   const group = React.useRef()
-  const { scene, animations } = useGLTF(src)
+  const { scene, animations } = useGLTF("https://res.cloudinary.com/dn07sxmaf/image/upload/v1735132282/3DPortfolio/destiny2_jdlhih.glb")
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes, materials } = useGraph(clone)
    const { actions } = useAnimations(animations, group);

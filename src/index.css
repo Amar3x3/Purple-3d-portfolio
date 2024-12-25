@@ -65,7 +65,7 @@ canvas{
 .btn{
   padding: 0.7rem 2.1rem;
   background-color: white;
-  color: red;
+  color: purple;
   text-align: center;
   position:absolute;
   top: 91%;
@@ -874,7 +874,7 @@ nav.open .links {
   .btn{
     padding: 0.7rem 2.1rem;
     background-color: white;
-    color: red;
+    color: purple;
     text-align: center;
     position:absolute;
     top: 91%;
