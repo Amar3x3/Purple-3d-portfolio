@@ -1,13 +1,13 @@
 import React, { Suspense, useRef, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Points, PointMaterial, Html, Loader } from "@react-three/drei";
-import Book from "./Book";
 import CartoonAirPlane from "./CartoonAirPlane";
 import gsap from "gsap";
 import { useNavigate } from "react-router-dom";
 import Load from "./Loader";
 import dragImg from '../assets/drag_animation.svg'
-import Nurse from "./Voxel_nurse";
+import Destiny from "./Destiny";
+import { EffectComposer, Bloom, ToneMapping } from "@react-three/postprocessing";
 
 
 // Starfield Component
@@ -15,7 +15,7 @@ export const StarField = () => {
   const pointsRef = useRef();
 
   const stars = React.useMemo(() => {
-    const starPositions = new Float32Array(3000 * 2);
+    const starPositions = new Float32Array(3000);
     for (let i = 0; i < starPositions.length; i++) {
       starPositions[i] = (Math.random() - 0.5) * 10;
     }
@@ -47,9 +47,9 @@ const Scene = ({ orbitControlsRef }) => {
   };
 
   const scaleModel = () => {
-    let s1 = 0.5; let s2 = 0.5; let s3 = 0.5;
+    let s1 = 0.41; let s2 = 0.41; let s3 = 0.41;
     if (isMobile) {
-      s1 = 0.05, s2 = 0.05, s3 = 0.05;
+      s1 = 0.2, s2 = 0.2, s3 = 0.2;
     }
     return { s1, s2, s3 };
   };
@@ -127,7 +127,32 @@ const Scene = ({ orbitControlsRef }) => {
     <>
       {/* Book Model */}
       {/* <Book position={[0, -0.4, 0]} scale={[s1, s2, s3]} /> */}
-      <Nurse  position={[-3.5, -3.3, 0]} scale={[s1, s2, s3]} rotation={[-0.3, 0, 0]}/>
+      {/* <Nurse  position={[-3.5, -3.3, 0]} scale={[s1, s2, s3]} rotation={[-0.3, 0, 0]}/> */}
+      <directionalLight
+        position={[5, 10, 7.5]}
+        intensity={0.1}
+      />
+      <ambientLight intensity={0.3} />
+
+
+
+
+
+
+      {/* *********** ----------------   Lagging a lot , might need to optimize it a bit ---------------------- ************************ */}
+      {/* <EffectComposer>
+        <Bloom luminanceThreshold={0.3} luminanceSmoothing={0.5} height={100} />
+        <ToneMapping exposure={1} />
+      </EffectComposer> */}
+
+      {/* *********** ----------------   Lagging a lot , might need to optimize it a bit ---------------------- ************************ */}
+
+
+
+
+
+
+      <Destiny position={[-0.4, -0.4, 0]} scale={[s1, s2, s3]} rotation={[-0.3, 0, 0]} />
 
       {/* Airplane Model, rotates around the book */}
       <CartoonAirPlane ref={airplaneRef} position={[-4, 3.7, 1]} scale={[0.02, 0.02, 0.02]} rotation={[0, 3, 0]} />
@@ -198,7 +223,7 @@ const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState(null);
-  const [dragThresholdMet, setDragThresholdMet] = useState(false); 
+  const [dragThresholdMet, setDragThresholdMet] = useState(false);
   const [showPopup, setShowPopup] = useState(true);
   const navigate = useNavigate();
   const orbitControlsRef = useRef();
@@ -211,7 +236,7 @@ const Home = () => {
   const handlePointerMove = (event) => {
     if (isDragging && dragStart !== null) {
       const dragDistance = event.clientX - dragStart;
-      if (dragDistance > 100) { 
+      if (dragDistance > 100) {
         setDragThresholdMet(true); // Disable animation after dragging threshold
       }
     }
@@ -219,7 +244,7 @@ const Home = () => {
 
   const handlePointerUp = () => {
     setIsDragging(false);
-    setDragStart(null); 
+    setDragStart(null);
   };
 
   useEffect(() => {
@@ -249,18 +274,18 @@ const Home = () => {
         >
           {/* Starfield Background */}
           <StarField />
-
+         
           <Suspense fallback={<Load />}>
             {/* Lighting Setup */}
             <directionalLight
-              position={[5, 5, 5]}
-              intensity={4}
+              position={[0, 0, 0]}
+              intensity={100}
               castShadow
 
             />
             <ambientLight intensity={0.4} />
             {/* <pointLight position={[0, 5, 5]} intensity={150} distance={50} decay={2} castShadow /> */}
-            <hemisphereLight skyColor={"#ffffff"} groundColor={"#444444"} intensity={0.4} position={[0, 50, 0]} />
+            <hemisphereLight skyColor={"#ffffff"} groundColor={"#444444"} intensity={0} position={[0, 50, 0]} />
 
 
             <Scene orbitControlsRef={orbitControlsRef} />
@@ -269,7 +294,15 @@ const Home = () => {
 
 
           {/* Orbit Controls for user interaction */}
-          <OrbitControls ref={orbitControlsRef} enablePan={false} enableZoom={false} enableRotate={true} enableDamping={true} />
+          <OrbitControls
+            ref={orbitControlsRef}
+            enableDamping
+            dampingFactor={0.05}
+            enableRotate={true}
+            enablePan={false}
+            enableZoom={false}
+
+          />
         </Canvas>
       </div>
 
@@ -278,13 +311,13 @@ const Home = () => {
         <div>
           <div className="popup">
             <img src={dragImg} alt="" />
-          <p>Drag to Explore
-          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-            </svg>
-          </p>
+            <p>Drag to Explore
+              <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+              </svg>
+            </p>
           </div>
-          
+
         </div>
       )}
 

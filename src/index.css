@@ -23,6 +23,7 @@ canvas{
   background: black;
   background: radial-gradient(circle, rgba(239,239,242,1) 2%, rgba(224,224,231,1) 23%, rgba(145,145,148,1) 64%, rgba(43,43,43,1) 100%); 
   background: #18797e;
+  background: purple;
   /* background: linear-gradient(to bottom, #3a5da3 0%, #638bc7 40%, #315a96 70%, #4c7cc4 100%); */
 }
 .canvas-container {
@@ -38,12 +39,12 @@ canvas{
 }
 .container{
   position: relative;
-  background-color: rgb(240, 97, 97);
+  background-color: rgb(236, 86, 236);
   color: white;
   width: 420px;
   padding: 2rem 1rem;
   border-radius: 12px;
-  box-shadow: 10px 10px 0px rgb(230, 51, 51);
+  box-shadow: 10px 10px 0px rgb(185, 2, 185);
 }
 .text{
   text-align: center;
@@ -140,7 +141,7 @@ align-items: center;
 .links{
   padding:0.6rem 2.5rem;
   background-color: white;
-  border-radius: 2rem;
+  border-radius: 3rem;
   margin-top: 1rem;
 }
 .links ul{
@@ -152,7 +153,7 @@ align-items: center;
   font-size: 1rem;
   font-family: 'Poppins', sans-serif;
   font-weight:500;
-  color: #f02a45;
+  color: purple;
 
 }
 .links a{
@@ -168,7 +169,7 @@ align-items: center;
   color: #081340;
 }
 .links a.active_nav{
-    background-color: #f02a45;
+    background-color: purple;
     color: var(--light-one);
     border-radius:2rem ;
     font-size: 1rem;
@@ -365,7 +366,7 @@ nav.open .links {
   padding: 1rem 1.7rem;
   background-color: white;
   margin: 2rem 0rem;
-  box-shadow: 20px 20px 30px rgb(228, 139, 139);
+  box-shadow: 0px 0px 30px rgb(228, 139, 139);
 }
 .full-card .dce{
   width: 355px;
@@ -424,7 +425,7 @@ nav.open .links {
   justify-content: center;
   padding: 0.7rem 1.6rem;
   border-radius: 3rem;
-  background-color:#f06161;
+  background-color: rgb(238, 128, 238);
 }
 .popup svg{
   width: 1.5rem;
@@ -439,6 +440,7 @@ nav.open .links {
   justify-content: center;
   color: white;
   font-size: 1.5rem;
+  position: relative;
 }
 
 .loader {
@@ -847,12 +849,11 @@ nav.open .links {
 
   .container{
     position: relative;
-    background-color: rgb(240, 97, 97);
+    
     color: white;
     width: 220px;
     padding: 1rem;
     border-radius: 12px;
-    box-shadow: 10px 10px 0px rgb(230, 51, 51);
   }
   .text{
     text-align: center;
